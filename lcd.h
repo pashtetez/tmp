@@ -60,7 +60,11 @@ class LCD
 {
 public:
     LCD();
-    void handle (pins a,std::function<void(int x, int y, bool i)> foo);
+
+    uint8_t adress=0;
+    uint8_t page=0;
+
+    void handle (pins a, std::function<void (int, int, bool)> foo);
 
 
     void displayOnOff (bool DB0);
@@ -76,6 +80,8 @@ public:
     void writeData (char DB);
 
     void readData (char DB);
+
+    std::function<void(int x, int y, bool i)> setPixel;
 };
 
 
