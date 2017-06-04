@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    lcd.cpp
+    lcd.cpp \
+    cryctal.cpp
 
 HEADERS  += mainwindow.h \
-    lcd.h
+    lcd.h \
+    cryctal.h
 
 FORMS    += mainwindow.ui

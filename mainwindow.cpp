@@ -105,6 +105,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //            WriteDataR(Logo128[p][c]);//Вывод очередного байта в индикатор
 //        }
     }
+    lcd.r.startLine = 33;
+    for (int i=0;i<128;i++){
+        for(int j=0;j<64;j++){
+            setPixel(i,j,lcd.getPixel(i,j));
+        }
+    }
+
 }
 
 MainWindow::~MainWindow()

@@ -2,7 +2,8 @@
 #define LCD_H
 #include <functional>
 #include <iostream>
-
+#include <vector>
+#include <cryctal.h>
 struct pins {
     //Common pin (CP)
     bool GND;
@@ -61,12 +62,11 @@ class LCD
 public:
     LCD();
 
-    uint8_t adress=0;
-    uint8_t page=0;
+    Crystal l,r;
 
     void handle (pins a, std::function<void (int, int, bool)> foo);
 
-
+bool getPixel(uint8_t x, uint8_t y);
     void displayOnOff (bool DB0);
 
     void displayStartLine (char DB);
