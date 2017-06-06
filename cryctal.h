@@ -9,26 +9,30 @@ class Crystal
 {
 public:
     Crystal();
-    uint8_t adress = 0;
-    uint8_t startLine = 0;
-    uint8_t page = 0;
-    std::vector<std::vector<bool> > ram;
+
+    bool getPixel(uint8_t x, uint8_t y);
 
     void displayOnOff (bool DB0);
 
-    void displayStartLine (char DB);
+    void displayStartLine (uint8_t DB);
 
-    void setPage (char DB);
+    void setPage (uint8_t DB);
 
-    void setAddress (char DB);
+    void setAddress (uint8_t DB);
 
-    void statusRead (bool DB7, bool DB5, bool DB4);
+    bool statusRead ();//return only on/off, cause i don't know, WHAT DA HECK ARE ANOTHER TWO
 
-    void writeData (char DB);
+    void writeData (uint8_t DB);
 
-    void readData (char DB);
+    uint8_t readData();
 
-    bool getPixel(uint8_t x, uint8_t y);
+private:
+
+    uint8_t adress = 0;
+    uint8_t startLine = 0;
+    uint8_t page = 0;
+    bool off = true;
+    std::vector<std::vector<bool> > ram;
 };
 
 #endif // CRYCTAL_H

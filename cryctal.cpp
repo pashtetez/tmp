@@ -6,43 +6,48 @@ Crystal::Crystal()
 }
 
 void  Crystal::displayOnOff (bool DB0){
-
+    off = !DB0;
 }
 
-void  Crystal::displayStartLine (char DB){
-
+void  Crystal::displayStartLine (uint8_t DB){
+    startLine = DB;
 }
 
-void  Crystal::setPage (char DB){
- page=DB;
- adress=0;
+void  Crystal::setPage (uint8_t DB){
+    page=DB;
 }
 
-void  Crystal::setAddress (char DB){
-
+void  Crystal::setAddress (uint8_t DB){
+    adress = DB;
 }
 
-void  Crystal::statusRead (bool DB7, bool DB5, bool DB4){
-
+bool Crystal::statusRead(){
+    return off;
 }
 
-void  Crystal::writeData (char DB){
+void  Crystal::writeData (uint8_t DB){
     for(int i=0;i<8;i++)
         if(DB & (1<<i)){
-            //setPixel(adress+crystal_offset,page*8+i ,1);
             ram[adress][page*8+i] = true;
         }
         else{
             ram[adress][page*8+i] = false;
-            //setPixel(adress+crystal_offset,page*8+i ,0);
         }
-    adress+=1;
+    adress += 1;
+    adress = adress % 64;
 }
 
-void  Crystal::readData (char DB){
-
+uint8_t Crystal::readData (){
+    uint8_t r=0;
+    for(int i=0;i<8;i++)
+        if(ram[adress][page*8+i]){
+            r |= 1<<i;
+        }
+    return r;
 }
 
 bool Crystal::getPixel(uint8_t x, uint8_t y){
+    if(off)
+        return false;
     return ram[x][(y+startLine)%64];
 }

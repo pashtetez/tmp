@@ -25,7 +25,7 @@ struct pins {
 
     //Data bus 0-7
     union {
-        char DB;
+        uint8_t DB;
         struct {
             bool DB7:1;
             bool DB6:1;
@@ -62,26 +62,49 @@ class LCD
 public:
     LCD();
 
+    bool RW, A0, E1, E2, E, RES;
+    uint8_t D;
+
+    void setRW (bool _RW ){ RW  = _RW;  }
+    void setA0 (bool _A0 ){ A0  = _A0;  }
+    void setE1 (bool _E1 ){ E1  = _E1;  }
+    void setE2 (bool _E2 ){ E2  = _E2;  }
+    void setE  (bool _E  ){ if (_E == 1 && E == 0) handle(); E = _E ;  }
+    void setRES(bool _RES){ RES = _RES; }
+    void setD  (uint8_t _D){ D  = _D;   }
+
+    bool getRW (){ return RW ; }
+    bool getA0 (){ return A0 ; }
+    bool getE1 (){ return E1 ; }
+    bool getE2 (){ return E2 ; }
+    bool getE  (){ return E  ; }
+    bool getRES(){ return RES; }
+    uint8_t getD(){ return D ; }
+
+    void LCDinit(void);
+
+    void Pset(uint8_t x, uint8_t y, bool c);
+
+    void WriteCodeL(uint8_t b);
+    void WriteCodeR(uint8_t b);
+    void WriteDataL(uint8_t b);
+    void WriteDataR(uint8_t b);
+    uint8_t ReadDataL(void);
+    uint8_t ReadDataR(void);
+
+    //Процедура выдачи байта в индикатор
+    void WriteByte(uint8_t b, bool cd, bool l, bool r);
+
+    uint8_t ReadByte(bool cd, bool l, bool r);
+
+    void WaitReady(bool l, bool r);
+
+    void handle();
+
+
     Crystal l,r;
 
-    void handle (pins a, std::function<void (int, int, bool)> foo);
-
-bool getPixel(uint8_t x, uint8_t y);
-    void displayOnOff (bool DB0);
-
-    void displayStartLine (char DB);
-
-    void setPage (char DB);
-
-    void setAddress (char DB);
-
-    void statusRead (bool DB7, bool DB5, bool DB4);
-
-    void writeData (char DB);
-
-    void readData (char DB);
-
-    std::function<void(int x, int y, bool i)> setPixel;
+    bool getPixel(uint8_t x, uint8_t y);
 };
 
 

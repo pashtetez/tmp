@@ -23,6 +23,7 @@ public:
     void setPixel (int x, int y, bool i);
 private:
     Ui::MainWindow *ui;
+
 };
 
 #endif // MAINWINDOW_H
