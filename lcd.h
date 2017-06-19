@@ -3,59 +3,7 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-#include <cryctal.h>
-struct pins {
-    //Common pin (CP)
-    bool GND;
-
-    //Display module power supply (digital part)
-    bool Ucc;
-
-    //LCD power input
-    bool U0;
-
-    //Choice of register data / commands
-    bool A0;
-
-    //Read / Write
-    bool read_or_write;
-
-    //Data strobing
-    bool E;
-
-    //Data bus 0-7
-    union {
-        uint8_t DB;
-        struct {
-            bool DB7:1;
-            bool DB6:1;
-            bool DB5:1;
-            bool DB4:1;
-            bool DB3:1;
-            bool DB2:1;
-            bool DB1:1;
-            bool DB0:1;
-        };
-    } data;
-
-    //Select crystal 1
-    bool E1;
-
-    //Select crystal 2
-    bool E2;
-
-    //Initialization
-    bool RES;
-
-    //Crystal select
-    bool Uee;
-
-    //– of the backlight power supply
-    bool K;
-
-    //+ of the backlight power supply
-    bool A;
-};
+#include "cryctal.h"
 
 class LCD
 {
@@ -106,6 +54,47 @@ public:
 
     bool getPixel(uint8_t x, uint8_t y);
 };
+
+extern "C" {
+    LCD* LCD_new(){return new LCD();}
+    
+    void LCD_setRW(LCD* lcd,bool _RW){lcd->setRW(_RW);}
+    void LCD_setA0 (LCD* lcd,bool _A0 ){lcd->setA0(_A0);}
+    void LCD_setE1 (LCD* lcd,bool _E1 ){lcd->setE1(_E1);}
+    void LCD_setE2 (LCD* lcd,bool _E2 ){lcd->setE2(_E2);}
+    void LCD_setE  (LCD* lcd,bool _E  ){lcd->setE(_E);}
+    void LCD_setRES(LCD* lcd,bool _RES){lcd->setRES(_RES);}
+    void LCD_setD  (LCD* lcd,uint8_t _D){lcd->setD(_D);}
+
+    bool LCD_getRW (LCD* lcd){ return lcd->getRW(); }
+    bool LCD_getA0 (LCD* lcd){ return lcd->getA0(); }
+    bool LCD_getE1 (LCD* lcd){ return lcd->getE1(); }
+    bool LCD_getE2 (LCD* lcd){ return lcd->getE2(); }
+    bool LCD_getE  (LCD* lcd){ return lcd->getE(); }
+    bool LCD_getRES(LCD* lcd){ return lcd->getRES(); }
+    uint8_t LCD_getD(LCD* lcd){ return lcd->getD(); }
+
+
+    void LCD_LCDinit(LCD* lcd){lcd->LCDinit();};
+
+    void LCD_Pset(LCD* lcd,uint8_t x, uint8_t y, bool c){lcd->Pset(x,y,c);};
+
+    void LCD_WriteCodeL(LCD* lcd,uint8_t b){lcd->WriteCodeL(b);};
+    void LCD_WriteCodeR(LCD* lcd,uint8_t b){lcd->WriteCodeR(b);};
+    void LCD_WriteDataL(LCD* lcd,uint8_t b){lcd->WriteDataL(b);};
+    void LCD_WriteDataR(LCD* lcd,uint8_t b){lcd->WriteDataR(b);};
+    uint8_t LCD_ReadDataL(LCD* lcd){return lcd->ReadDataL();};
+    uint8_t LCD_ReadDataR(LCD* lcd){return lcd->ReadDataR();};
+
+    //Процедура выдачи байта в индикатор
+    void LCD_WriteByte(LCD* lcd,uint8_t b, bool cd, bool l, bool r){lcd->WriteByte(b,cd,l,r);};
+
+    uint8_t LCD_ReadByte(LCD* lcd,bool cd, bool l, bool r){return lcd->ReadByte(cd,l,r);};
+
+    void LCD_WaitReady(LCD* lcd,bool l, bool r){lcd->WaitReady(l,r);};
+    
+    bool LCD_getPixel(LCD* lcd,uint8_t x, uint8_t y){return lcd->getPixel(x,y);};
+}
 
 
 #endif // LCD_H

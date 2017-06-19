@@ -1,0 +1,78 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+<link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css"/><!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="512" height="256" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+ 
+$(document).ready(function() {
+    $.ajaxSetup({
+      xhrFields: {
+        withCredentials: true
+      }
+    });  
+  
+    $("#add").click(function(){
+        jQuery.ajax({
+            url: "http://127.0.0.1:5000/getDisplay",
+            data:  "",
+            cache: false,
+            contentType: false,
+            crossDomain: true,
+            processData: false,
+            type: 'POST',
+            success: function(data){
+                obj=jQuery.parseJSON(data);
+                var mult=4;
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                ctx.fillStyle="#79f229";
+                for (var i = 0; i < obj.length; i++) {
+                    var t = obj[i]
+                    for (var j = 0; j < t.length; j++) {
+                        if(t[j]==1)
+                            ctx.fillRect(i*mult, j*mult, mult, mult);
+                        else{
+                            ctx.fillStyle="#FFFFFF";
+                            ctx.fillRect(i*mult, j*mult, mult, mult);
+                            ctx.fillStyle="#79f229";
+                        }
+                    }
+                }
+            }
+        });
+    });
+});
+
+function setPixel(x, y, c){
+    jQuery.ajax({
+            url: "http://127.0.0.1:5000/setPixel",
+            data: JSON.stringify({ "x": x, "y":y, "c":c }) , cache: false,
+            contentType: false,
+            crossDomain: true,
+            processData: false,
+            type: 'POST',
+            success: function(data){
+               // $("#add").click();    
+            }
+        });
+}
+
+function myFunction() {
+    var x = document.getElementById("myTextarea").value;
+    eval(x);
+}
+
+</script>
+
+<br><button id="add">Add</button> 
+<textarea id="myTextarea">
+</textarea>
+<button type="button" onclick="myFunction()">Try it</button>
+<br><button id="code">Code</button> 
+</body>
+</html>

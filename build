@@ -1,0 +1,2 @@
+g++ -c -std=c++11 -fPIC lcd.cpp cryctal.cpp
+g++ -shared -Wl,-soname,liblcd.so -o liblcd.so  lcd.o cryctal.o
