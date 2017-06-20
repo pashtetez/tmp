@@ -53,34 +53,34 @@ class LCD(object):
     def LCDinit(self):
         return lib.LCD_LCDinit(self.obj)
 
-    def Pset(self, x, y, c): 
-        lib.LCD_Pset(self.obj,x,y,c)
-
-    def WriteCodeL(self, b):
-        lib.LCD_WriteCodeL(self.obj,b)
-
-    def WriteCodeR(self, b):
-        lib.LCD_WriteCodeR(self.obj,b)
-
-    def WriteDataL(self, b):
-        lib.LCD_WriteDataL(self.obj,b)
-
-    def WriteDataR(self, b):
-        lib.LCD_WriteDataR(self.obj,b)
-
-    def ReadDataL(self):
-        return lib.LCD_ReadDataL(self.obj)
-
-    def ReadDataR(self):
-        return lib.LCD_ReadDataR(self.obj)
-
-
-    def WriteByte(self, b, cd, l, r):
-        lib.LCD_WriteByte(self.obj,b,cd,l,r)
-
-    def ReadByte(self, cd, l, r):
-        return lib.LCD_ReadByte(self.obj,cd,l,r)
-
+#    def Pset(self, x, y, c): 
+#        lib.LCD_Pset(self.obj,x,y,c)
+#
+#    def WriteCodeL(self, b):
+#        lib.LCD_WriteCodeL(self.obj,b)
+#
+#    def WriteCodeR(self, b):
+#        lib.LCD_WriteCodeR(self.obj,b)
+#
+#    def WriteDataL(self, b):
+#        lib.LCD_WriteDataL(self.obj,b)
+#
+#    def WriteDataR(self, b):
+#        lib.LCD_WriteDataR(self.obj,b)
+#
+#    def ReadDataL(self):
+#        return lib.LCD_ReadDataL(self.obj)
+#
+#    def ReadDataR(self):
+#        return lib.LCD_ReadDataR(self.obj)
+#
+#
+#    def WriteByte(self, b, cd, l, r):
+#        lib.LCD_WriteByte(self.obj,b,cd,l,r)
+#
+#    def ReadByte(self, cd, l, r):
+#        return lib.LCD_ReadByte(self.obj,cd,l,r)
+#
     def WaitReady(self, l, r):
         lib.LCD_WaitReady(self.obj,l,r)
 
