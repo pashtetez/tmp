@@ -3,11 +3,12 @@
 <link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css"/><!DOCTYPE html>
 <html>
 <body>
-
-<canvas id="myCanvas" width="512" height="256" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
-
+<div id="container" style="position: relative; height: 527px; width:700px;" >
+    <img class='img' src="http://192.168.2.72:8080/MT_12864A_700x527_clean.jpg" style="position:absolute;z-index:1;" alt="" />
+    <canvas id="myCanvas" width="1664" height="832" style="position:absolute;z-index:20;border:1px solid transparent;top:-154;left:-484;transform: scale(0.30769230769)">Your browser does not support the HTML5 canvas tag.</canvas>
+</div>
 <script>
+
 var Logo128=//128x64 pixel, каждые 8 вертикальных точек собраны в байт
 [
     [   0xFF,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
@@ -230,7 +231,7 @@ $(document).ready(function() {
   
     $("#add").click(function(){
         jQuery.ajax({
-            url: "http://127.0.0.1:5000/getDisplay",
+            url: "http://192.168.2.72:5000/getDisplay",
             data:  "",
             cache: false,
             contentType: false,
@@ -239,22 +240,24 @@ $(document).ready(function() {
             type: 'POST',
             success: function(data){
                 obj=jQuery.parseJSON(data);
-                var mult=4;
+                var mult=12;
                 var c = document.getElementById("myCanvas");
                 var ctx = c.getContext("2d");
-                ctx.fillStyle="#79f229";
+                var fillcolor = "rgba(56, 46, 10,"
                 for (var i = 0; i < obj.length; i++) {
                     var t = obj[i]
                     for (var j = 0; j < t.length; j++) {
-                        if(t[j]==1)
-                            ctx.fillRect(i*mult, j*mult, mult, mult);
-                        else{
-                            ctx.fillStyle="#FFFFFF";
-                            ctx.fillRect(i*mult, j*mult, mult, mult);
-                            ctx.fillStyle="#79f229";
+                        if(t[j]==1){
+                            ctx.fillStyle = fillcolor +'1)';
+                            ctx.fillRect(i*(mult+1), j*(mult+1), mult, mult);
+                        }else{
+                            ctx.fillStyle="#FFFFFF00";
+                            ctx.fillStyle = fillcolor +'0)';
+                            ctx.fillRect(i*(mult+1), j*(mult+1), mult, mult);
                         }
                     }
                 }
+                //c.style.transform = "scale(0.30769230769)";//4/13
             }
         });
     });
@@ -262,7 +265,7 @@ $(document).ready(function() {
 
 function sendScript(){
     jQuery.ajax({
-            url: "http://127.0.0.1:5000/data",
+            url: "http://192.168.2.72:5000/data",
             data: JSON.stringify(script) , cache: false,
             contentType: false,
             crossDomain: true,
@@ -277,7 +280,7 @@ function sendScript(){
 
 function setPixel(x, y, c){
     jQuery.ajax({
-            url: "http://127.0.0.1:5000/setPixel",
+            url: "http://192.168.2.72:5000/setPixel",
             data: JSON.stringify({ "x": x, "y":y, "c":c }) , cache: false,
             contentType: false,
             crossDomain: true,
