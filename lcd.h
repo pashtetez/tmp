@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "cryctal.h"
+#include <time.h>
 
 class LCD
 {
@@ -88,6 +89,13 @@ extern "C" {
 
     //Процедура выдачи байта в индикатор
     void LCD_WriteByte(LCD* lcd,uint8_t b, bool cd, bool l, bool r){lcd->WriteByte(b,cd,l,r);};
+
+    void LCD_nanosleep(uint64_t time){
+        struct timespec tim, tim2;
+        tim.tv_sec = 0;
+        tim.tv_nsec = time;
+        nanosleep(&tim , &tim2);
+    }
 
     uint8_t LCD_ReadByte(LCD* lcd,bool cd, bool l, bool r){return lcd->ReadByte(cd,l,r);};
 

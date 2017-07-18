@@ -56,6 +56,9 @@ class LCD(object):
     def WaitReady(self, l, r):
         lib.LCD_WaitReady(self.obj,l,r)
 
+    def nanosleep(self, time):
+        lib.LCD_nanosleep(self.obj, time)
+
     def getPixel(self, x, y):
         func = lib.LCD_getPixel
         func.restype = c_bool

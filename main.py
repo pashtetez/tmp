@@ -28,6 +28,13 @@ def script():
             lcd.setRES(x['val'])
         if x['pin']=='D':
             lcd.setD(x['val'])
+        if x['pin']=='delay':
+            if x['mult'] == 'ms':
+                lcd.nanosleep(x['val']*1000000)
+            if x['mult'] == 'us':
+                lcd.nanosleep(x['val']*1000)
+            if x['mult'] == 'ns':
+                lcd.nanosleep(x['val'])
     print d;
     return "" 
 
